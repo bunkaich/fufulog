@@ -13,14 +13,17 @@
 }
 
 .post__item {
-  margin: 0 auto 40px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   position: relative;
   display: flex;
   width: 100%;
   gap: var(--gap);
+  border-bottom: 1px solid #dddddd;
 }
 .post__item img {
   transition: transform 0.7s ease;
+  vertical-align: bottom;
 }
 .post__item:hover img {
   cursor: pointer;
