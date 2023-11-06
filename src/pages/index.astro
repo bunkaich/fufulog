@@ -6,6 +6,7 @@ import {
   getAllTags,
   getNumberOfPages,
 } from '../lib/notion/client.ts'
+import { getPostLink } from '../lib/blog-helpers.ts'
 import Layout from '../layouts/Layout.astro'
 import NoContents from '../components/NoContents.astro'
 import PostDate from '../components/PostDate.astro'
@@ -34,13 +35,21 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
         <NoContents contents={posts} />
       ) : (
         posts.map((post) => (
-          <div class={styles.post} key={post.Slug}>
-            <PostDate post={post} />
-            <PostTags post={post} />
-            <PostTitle post={post} />
-            <PostFeaturedImage post={post} />
-            <PostExcerpt post={post} />
-            <ReadMoreLink post={post} />
+          <div class={styles.post__item} key={post.Slug}>
+            <div class={styles.post__thumbnail}>
+              <PostFeaturedImage post={post} />
+            </div>
+            <div class={styles.post__text}>
+              <div class="flex-box">
+                <PostDate post={post} />
+                <PostTags post={post} />
+              </div>
+              <PostTitle post={post} />
+
+              <PostExcerpt post={post} />
+              <!--<ReadMoreLink post={post} />-->
+              <a class={styles.post__link} href={getPostLink(post.Slug)} />
+            </div>
           </div>
         ))
       )
@@ -56,3 +65,11 @@ const [posts, rankedPosts, tags, numberOfPages] = await Promise.all([
     <BlogTagsLink heading="Categories" tags={tags} />
   </div>
 </Layout>
+
+<style>
+  .flex-box {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+</style>
